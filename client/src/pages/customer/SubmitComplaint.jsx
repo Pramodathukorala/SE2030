@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { createComplaint } from '../../services/api';
+import { createComplaint, getComplaintAdmins } from '../../services/api';
 import DashboardLayout from '../../components/DashboardLayout';
 import { toast } from 'react-toastify';
 
@@ -9,11 +9,30 @@ const SubmitComplaint = () => {
   const [formData, setFormData] = useState({
     title: '',
     category: 'TRANSACTION_ISSUE',
-    description: ''
+    description: '',
+    assignedAdmin: ''
   });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const navigate = useNavigate();
+  const [admins, setAdmins] = useState([]);
+  const [adminsLoading, setAdminsLoading] = useState(true);
+  const [adminsError, setAdminsError] = useState('');
+
+  const fetchAdmins = async () => {
+    setAdminsLoading(true);
+    setAdminsError('');
+    try {
+      const res = await getComplaintAdmins();
+      setAdmins(res.data.data);
+    } catch {
+      setAdminsError('Unable to load admins. Please try again.');
+    } finally {
+      setAdminsLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchAdmins(); }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,12 +45,17 @@ const SubmitComplaint = () => {
       return;
     }
 
+    if (!formData.assignedAdmin) {
+      toast.error('Please select an admin');
+      return;
+    }
+
     try {
       setLoading(true);
       const res = await createComplaint(formData);
       setResult({ success: true, data: res.data.data });
       toast.success('Complaint submitted successfully');
-      setFormData({ title: '', category: 'TRANSACTION_ISSUE', description: '' });
+      setFormData({ title: '', category: 'TRANSACTION_ISSUE', description: '', assignedAdmin: '' });
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to submit complaint');
     } finally {
@@ -84,6 +108,21 @@ const SubmitComplaint = () => {
               </Form.Select>
             </Form.Group>
 
+            <Form.Group className="mb-3" controlId="assignedAdmin">
+              <Form.Label>Assign to Admin <span className="text-danger">*</span></Form.Label>
+              <Form.Select name="assignedAdmin" value={formData.assignedAdmin} onChange={handleChange}
+                required disabled={adminsLoading || !!adminsError || admins.length === 0}>
+                <option value="">{adminsLoading ? 'Loading admins...' : 'Select an admin'}</option>
+                {admins.map(admin => (
+                  <option key={admin._id} value={admin._id}>{admin.firstName} {admin.lastName}</option>
+                ))}
+              </Form.Select>
+              {adminsError && <Alert variant="danger" className="mt-2">{adminsError} <Button variant="link" onClick={fetchAdmins}>Retry</Button></Alert>}
+              {!adminsLoading && !adminsError && admins.length === 0 && (
+                <Alert variant="warning" className="mt-2">No admins are currently available. Please try again later.</Alert>
+              )}
+            </Form.Group>
+
             <Form.Group className="mb-4">
               <Form.Label>Description <span className="text-danger">*</span></Form.Label>
               <Form.Control 
@@ -102,7 +141,7 @@ const SubmitComplaint = () => {
               type="submit" 
               className="py-2 px-4"
               style={{ backgroundColor: '#F4A261', borderColor: '#F4A261', color: '#fff' }}
-              disabled={loading}
+              disabled={loading || adminsLoading || !!adminsError || admins.length === 0}
             >
               {loading ? 'Submitting...' : 'Submit Complaint'}
             </Button>

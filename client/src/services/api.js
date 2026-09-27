@@ -39,6 +39,8 @@ export const getTransactionByReference = (refNumber) => api.get(`/transactions/r
 export const getTransactionById = (id) => api.get(`/transactions/${id}`);
 
 // Complaints
+export const deleteComplaint = (id) => api.delete(`/complaints/${id}`);
+export const getComplaintAdmins = () => api.get('/complaints/admins');
 export const createComplaint = (data) => api.post('/complaints', data);
 export const getMyComplaints = (params) => api.get('/complaints/my-complaints', { params });
 export const getComplaintById = (id) => api.get(`/complaints/${id}`);
@@ -62,6 +64,7 @@ export const getManagerDashboard = () => api.get('/dashboard/manager');
 export const getAdminDashboard = () => api.get('/dashboard/admin');
 
 // Admin
+export const deleteUser = (id) => api.delete(`/admin/users/${id}`);
 export const getAllUsers = (params) => api.get('/admin/users', { params });
 export const getUserById = (id) => api.get(`/admin/users/${id}`);
 export const createStaffUser = (data) => api.post('/admin/users', data);

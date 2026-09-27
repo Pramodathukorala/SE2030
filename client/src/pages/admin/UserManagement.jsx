@@ -97,6 +97,7 @@ const UserManagement = () => {
                     <th>Role</th>
                     <th>Status</th>
                     <th>Joined Date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -112,10 +113,11 @@ const UserManagement = () => {
                           </Badge>
                         </td>
                         <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+                        <td><Button as={Link} to={`/admin/users/${u._id}`} variant="outline-primary" size="sm">Manage User</Button></td>
                       </tr>
                     ))
                   ) : (
-                    <tr><td colSpan="5" className="text-center py-4">No users found</td></tr>
+                    <tr><td colSpan="6" className="text-center py-4">No users found</td></tr>
                   )}
                 </tbody>
               </Table>

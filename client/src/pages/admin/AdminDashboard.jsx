@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Table, Button, Badge } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { getAdminDashboard } from '../../services/api';
+import { getAdminDashboard, deleteComplaint } from '../../services/api';
+import { toast } from 'react-toastify';
 import DashboardLayout from '../../components/DashboardLayout';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { FaUsers, FaUserTie, FaUserShield, FaUserCheck, FaUserPlus } from 'react-icons/fa';
@@ -12,6 +13,21 @@ const AdminDashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleDeleteComplaint = async (complaint) => {
+    if (!window.confirm(`Permanently delete complaint ${complaint.complaintNumber}? This cannot be undone.`)) return;
+    setDeletingId(complaint._id);
+    try {
+      await deleteComplaint(complaint._id);
+      setData(previous => ({ ...previous, assignedComplaints: previous.assignedComplaints.filter(item => item._id !== complaint._id) }));
+      toast.success('Complaint deleted');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete complaint');
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -39,6 +55,29 @@ const AdminDashboard = () => {
         </Button>
       </div>
       
+      <Card className="shadow-sm border-0 mb-4">
+        <Card.Header className="bg-white py-3">
+          <h5 className="mb-0" style={{ color: '#0B3D60' }}>Complaints Assigned to Me</h5>
+        </Card.Header>
+        <Card.Body>
+          {data.assignedComplaints?.length ? data.assignedComplaints.map(complaint => (
+            <div key={complaint._id} className="border rounded p-3 mb-3">
+              <div className="d-flex justify-content-between gap-3">
+                <h6>{complaint.complaintNumber}: {complaint.title}</h6>
+                <Badge bg="info" className="align-self-start">{complaint.status.replace(/_/g, ' ')}</Badge>
+              </div>
+              <p className="text-muted small mb-2">
+                {complaint.customer?.firstName} {complaint.customer?.lastName} · {complaint.category.replace(/_/g, ' ')} · {new Date(complaint.createdAt).toLocaleString()}
+              </p>
+              <p className="mb-0" style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{complaint.description}</p>
+              <Button variant="outline-danger" size="sm" className="mt-3" disabled={!!deletingId} onClick={() => handleDeleteComplaint(complaint)}>
+                {deletingId === complaint._id ? 'Deleting...' : 'Delete Complaint'}
+              </Button>
+            </div>
+          )) : <p className="text-muted mb-0">No complaints assigned to you yet.</p>}
+        </Card.Body>
+      </Card>
+
       <Row className="mb-4 g-3">
         <Col md={4} sm={6}>
           <Card className="shadow-sm border-0 h-100" style={{ borderLeft: '5px solid #0B3D60' }}>
