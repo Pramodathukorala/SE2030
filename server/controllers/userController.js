@@ -106,4 +106,34 @@ const updateUserStatus = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUserById, createStaffUser, updateUser, updateUserRole, updateUserStatus };
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, message: 'Invalid user ID' });
+  }
+  if (id.toLowerCase() === req.user._id.toString()) {
+    return res.status(400).json({ success: false, message: 'You cannot delete your own account' });
+  }
+  let session;
+  try {
+    session = await mongoose.startSession();
+    let deleted;
+    await session.withTransaction(async () => {
+      deleted = await User.findOneAndDelete({ _id: id }, { session });
+      if (!deleted) return;
+      // Preserve banking history while preventing further transfers to this account.
+      await Account.updateMany({ user: id }, { $set: { status: 'INACTIVE' } }, { session });
+      // Keep complaints accessible when an assigned staff member is removed.
+      const Complaint = require('../models/Complaint');
+      await Complaint.updateMany({ assignedAdmin: id }, { $set: { assignedAdmin: req.user._id } }, { session });
+    });
+    if (!deleted) return res.status(404).json({ success: false, message: 'User not found' });
+    res.json({ success: true, message: 'User deleted' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  } finally {
+    if (session) await session.endSession();
+  }
+};
+
+module.exports = { getAllUsers, getUserById, createStaffUser, updateUser, updateUserRole, updateUserStatus, deleteUser };

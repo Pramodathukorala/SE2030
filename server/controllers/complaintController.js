@@ -1,16 +1,34 @@
 const Complaint = require('../models/Complaint');
+const User = require('../models/User');
 const Notification = require('../models/Notification');
 const generateComplaintNumber = require('../utils/generateComplaintNumber');
 const mongoose = require('mongoose');
 
+const getComplaintAdmins = async (req, res) => {
+  try {
+    const admins = await User.find({ role: 'SYSTEM_ADMIN', status: 'ACTIVE' })
+      .select('firstName lastName').sort({ firstName: 1, lastName: 1 });
+    res.json({ success: true, data: admins });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const createComplaint = async (req, res) => {
   try {
-    const { title, description, category } = req.body;
+    const { title, description, category, assignedAdmin } = req.body;
     
     if (!title || !description) {
       return res.status(400).json({ success: false, message: 'Title and description are required' });
     }
 
+    if (typeof assignedAdmin !== 'string' || !mongoose.Types.ObjectId.isValid(assignedAdmin)) {
+      return res.status(400).json({ success: false, message: 'Please select a valid admin' });
+    }
+    const admin = await User.findOne({ _id: assignedAdmin, role: 'SYSTEM_ADMIN', status: 'ACTIVE' });
+    if (!admin) {
+      return res.status(400).json({ success: false, message: 'Selected admin is not available. Please select another admin.' });
+    }
     const complaintNumber = await generateComplaintNumber();
 
     const complaint = await Complaint.create({
@@ -18,7 +36,9 @@ const createComplaint = async (req, res) => {
       customer: req.user._id,
       title,
       description,
-      category: category || 'OTHER'
+      category: category || 'OTHER',
+      assignedAdmin: admin._id,
+      status: 'ASSIGNED'
     });
 
     await Notification.create({
@@ -57,7 +77,7 @@ const getComplaintById = async (req, res) => {
     const complaint = await Complaint.findById(id).populate('customer', 'firstName lastName email');
     if (!complaint) return res.status(404).json({ success: false, message: 'Complaint not found' });
 
-    if (req.user.role === 'CUSTOMER' && complaint.customer._id.toString() !== req.user._id.toString()) {
+    if (req.user.role === 'CUSTOMER' && complaint.customer?._id.toString() !== req.user._id.toString()) {
       return res.status(403).json({ success: false, message: 'Not authorized' });
     }
 
@@ -190,7 +210,24 @@ const addManagerNotes = async (req, res) => {
   }
 };
 
+const deleteComplaint = async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: 'Invalid complaint ID' });
+    }
+    const complaint = await Complaint.findOneAndDelete({
+      _id: req.params.id, assignedAdmin: req.user._id
+    });
+    if (!complaint) return res.status(404).json({ success: false, message: 'Assigned complaint not found' });
+    res.json({ success: true, message: 'Complaint deleted' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
+  deleteComplaint,
+  getComplaintAdmins,
   createComplaint,
   getMyComplaints,
   getComplaintById,

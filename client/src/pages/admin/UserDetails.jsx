@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Badge, Button, Form, Row, Col, Modal } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getUserById, updateUser, updateUserRole, updateUserStatus } from '../../services/api';
+import { getUserById, updateUser, updateUserRole, updateUserStatus, deleteUser } from '../../services/api';
 import DashboardLayout from '../../components/DashboardLayout';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { toast } from 'react-toastify';
@@ -15,6 +15,21 @@ const UserDetails = () => {
   
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Permanently delete ${userProfile.firstName} ${userProfile.lastName}? Their bank accounts will be deactivated and banking history retained. Any admin complaints assigned to them will be transferred to you. This cannot be undone.`)) return;
+    setDeleting(true);
+    try {
+      await deleteUser(id);
+      toast.success('User deleted');
+      navigate('/admin/users');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete user');
+    } finally {
+      setDeleting(false);
+    }
+  };
   
   // Edit form state
   const [formData, setFormData] = useState({ firstName: '', lastName: '', phone: '' });
@@ -161,6 +176,10 @@ const UserDetails = () => {
                   {userProfile.status === 'ACTIVE' ? 'Deactivate User' : 'Activate User'}
                 </Button>
                 {isSelf && <small className="text-muted d-block mt-2">Cannot change your own role/status.</small>}
+                <Button variant="danger" className="w-100 mt-3" onClick={handleDelete} disabled={isSelf || deleting}>
+                  {deleting ? 'Deleting...' : 'Delete User'}
+                </Button>
+                {isSelf && <small className="text-muted d-block mt-2">You cannot delete your own account.</small>}
               </div>
             </Card.Body>
           </Card>

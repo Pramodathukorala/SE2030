@@ -97,11 +97,14 @@ const getAdminDashboard = async (req, res) => {
 
     const activeUsers = await User.countDocuments({ status: 'ACTIVE' });
     const inactiveUsers = await User.countDocuments({ status: 'INACTIVE' });
+    const assignedComplaints = await Complaint.find({ assignedAdmin: req.user._id })
+      .populate('customer', 'firstName lastName').sort({ createdAt: -1 });
 
     res.json({
       success: true,
       message: 'Admin dashboard data',
       data: {
+        assignedComplaints,
         users: { total: totalUsers, customers, officers, managers },
         status: { active: activeUsers, inactive: inactiveUsers }
       }

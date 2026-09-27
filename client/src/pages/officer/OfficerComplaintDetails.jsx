@@ -113,9 +113,9 @@ const OfficerComplaintDetails = () => {
                 <h6 className="fw-bold mb-2">Customer Details:</h6>
                 {complaint.customer ? (
                   <p className="mb-0">
-                    {complaint.customer.firstName} {complaint.customer.lastName} <br/>
-                    Email: {complaint.customer.email} <br/>
-                    Phone: {complaint.customer.phone}
+                    {complaint.customer ? `${complaint.customer.firstName} ${complaint.customer.lastName}` : 'Deleted user'} <br/>
+                    Email: {complaint.customer?.email || 'N/A'} <br/>
+                    Phone: {complaint.customer?.phone || 'N/A'}
                   </p>
                 ) : 'N/A'}
               </div>

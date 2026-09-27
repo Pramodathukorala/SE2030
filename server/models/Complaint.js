@@ -15,6 +15,7 @@ const complaintSchema = new mongoose.Schema({
     enum: ['OPEN', 'ASSIGNED', 'IN_PROGRESS', 'ESCALATED', 'RESOLVED', 'CLOSED'], 
     default: 'OPEN' 
   },
+  assignedAdmin: { type: mongoose.Schema.Types.ObjectId, ref: 'User', index: true },
   assignedOfficer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   staffNotes: { type: String },
   managerNotes: { type: String },
