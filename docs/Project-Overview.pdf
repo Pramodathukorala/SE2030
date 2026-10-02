@@ -1,0 +1,147 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3062 >>
+stream
+BT /F2 10 Tf 0.09 0.42 0.53 rg 1 0 0 1 48 780 Tm (WEB-BASED BANKING SYSTEM) Tj ET
+BT /F2 25 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 745 Tm (Project Overview) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 720 Tm (MERN stack | Banking simulation | Four user roles) Tj ET
+0.95 0.64 0.38 RG 2 w 48 700 m 547 700 l S
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 672 Tm (Student: Athukorala A A C P    |    Student ID: IT22139962) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 639 Tm (Purpose) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 614 Tm (This full-stack web application simulates everyday banking operations, customer) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 598 Tm (support, and user administration. Customers manage demo accounts, transfer simulated) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 582 Tm (funds, track transactions, and submit complaints. It is an academic demonstration) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 566 Tm (and does not connect to real banking networks or move real money.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 533 Tm (Users and responsibilities) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 508 Tm (Customer: Register and sign in, view balances, transfer funds, search transaction) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 492 Tm (history, submit complaints to a selected admin, and read notifications.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 467 Tm (Customer Service Officer: Work with assigned complaints, update statuses, add staff) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 451 Tm (notes, and escalate complex issues.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 426 Tm (Bank Manager: Review escalated complaints, add manager notes, and view complaint) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 410 Tm (reports and statistics.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 385 Tm (System Admin: Manage users and staff, change roles and account access, delete users,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 369 Tm (and view or delete complaints assigned to their account.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 336 Tm (Main modules) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 311 Tm (Authentication and role access; account information; fund transfers and transaction) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 295 Tm (tracking; complaint handling; notifications; and system administration.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 262 Tm (Recent additions) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 237 Tm (Complaint submission includes an active-admin dropdown. The selected admin sees the) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 221 Tm (complaint on their dashboard and can delete it after confirmation. Admins can also) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 205 Tm (delete users through the user details page; self-deletion is blocked.) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 35 Tm (SE2030 | Academic project overview) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 520 35 Tm (1 / 3) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 3334 >>
+stream
+BT /F2 10 Tf 0.09 0.42 0.53 rg 1 0 0 1 48 780 Tm (WEB-BASED BANKING SYSTEM) Tj ET
+BT /F2 25 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 745 Tm (Architecture & Data) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 720 Tm (How the frontend, backend, and database work together) Tj ET
+0.95 0.64 0.38 RG 2 w 48 700 m 547 700 l S
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 664 Tm (Technology stack) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 639 Tm (Frontend: React and Vite build the interface. React Router handles navigation,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 623 Tm (Bootstrap provides UI styling, Axios sends API requests, and Context API shares) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 607 Tm (authentication state.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 582 Tm (Backend: Node.js and Express provide REST APIs. JWT identifies signed-in users,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 566 Tm (bcryptjs hashes passwords, and express-validator checks registration inputs.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 541 Tm (Database: MongoDB stores application data. Mongoose defines schemas, relationships,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 525 Tm (and field validation.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 492 Tm (Request flow) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 467 Tm (React page -> Axios request -> Express route -> Authentication and role checks ->) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 451 Tm (Controller -> Mongoose model -> MongoDB) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 426 Tm (The backend returns a JSON response. The frontend uses that response to update the) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 410 Tm (screen or show a success or error message.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 377 Tm (Five core data models) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 352 Tm (User: Names, email, password hash, role, and active/inactive status.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 327 Tm (Account: Account number, owner, account type, balance, and status.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 302 Tm (Transaction: Sender and receiver accounts, amount, reference number, status,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 286 Tm (description, and timestamps.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 261 Tm (Complaint: Customer, title, description, category, assigned admin/officer, status,) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 245 Tm (staff/manager notes, and lifecycle timestamps.) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 220 Tm (Notification: Recipient, title, message, notification type, read status, and) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 204 Tm (timestamps.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 171 Tm (Relationships) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 146 Tm (Accounts reference users. Each transfer references two accounts. Complaints) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 130 Tm (reference a customer and assigned staff. Notifications reference the user who) Tj ET
+BT /F1 11 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 114 Tm (receives them.) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 35 Tm (SE2030 | Academic project overview) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 520 35 Tm (2 / 3) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3706 >>
+stream
+BT /F2 10 Tf 0.09 0.42 0.53 rg 1 0 0 1 48 780 Tm (WEB-BASED BANKING SYSTEM) Tj ET
+BT /F2 25 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 745 Tm (Structure & Workflows) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 720 Tm (A guide to the code and the main user journeys) Tj ET
+0.95 0.64 0.38 RG 2 w 48 700 m 547 700 l S
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 664 Tm (Frontend folders) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 639 Tm (client/src/pages/: Screens grouped by customer, officer, manager, admin, and authentication.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 623 Tm (components/: Shared layouts and UI. context/: Authentication state. services/api.js: API) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 607 Tm (calls. App.jsx: Page routes and role restrictions.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 574 Tm (Backend folders) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 549 Tm (server/routes/: API endpoints. controllers/: Business logic. models/: Database schemas.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 533 Tm (middleware/: Authentication, roles, and errors. utils/: Currency and identifier helpers.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 517 Tm (tests/: Backend tests. seed/: Demo data. server.js: Server startup and database connection.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 484 Tm (Fund transfer workflow) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 459 Tm (1. Customer enters the receiver account and transfer amount.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 434 Tm (2. Backend checks identity, account status, amount precision, and available balance.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 409 Tm (3. A database transaction updates both balances and records the transfer together.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 393 Tm (Notifications are created and the result is returned to the customer.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 360 Tm (Complaint workflow) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 335 Tm (A customer selects an active admin and submits a complaint. The backend validates the) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 319 Tm (selection, saves the assignment, and marks the complaint ASSIGNED. It appears in that) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 303 Tm (admin's dashboard. Separate officer and manager screens support handling and escalation.) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 278 Tm (Supported statuses: OPEN, ASSIGNED, IN_PROGRESS, ESCALATED, RESOLVED, and CLOSED.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 245 Tm (User deletion behavior) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 220 Tm (An admin confirms deletion from the user details page. Linked bank accounts become inactive) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 204 Tm (while banking history is retained. Admin complaints assigned to the deleted user transfer to) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 188 Tm (the deleting admin. These changes run in one database transaction.) Tj ET
+BT /F2 15 Tf 0.04 0.24 0.38 rg 1 0 0 1 48 155 Tm (Presentation summary) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 130 Tm (My project is a MERN-based banking simulation with four user roles. It combines account) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 114 Tm (management, fund transfers, transaction tracking, complaint handling, and administration) Tj ET
+BT /F1 10 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 98 Tm (using authentication, role checks, validation, and database transactions.) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 48 35 Tm (SE2030 | Academic project overview) Tj ET
+BT /F1 9 Tf 0.16 0.20 0.25 rg 1 0 0 1 520 35 Tm (3 / 3) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000128 00000 n 
+0000000198 00000 n 
+0000000273 00000 n 
+0000003387 00000 n 
+0000003523 00000 n 
+0000006909 00000 n 
+0000007045 00000 n 
+0000010803 00000 n 
+trailer
+<< /Size 11 /Root 1 0 R >>
+startxref
+10940
+%%EOF
