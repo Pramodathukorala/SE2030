@@ -1,9 +1,9 @@
 const Transaction = require('../models/Transaction');
 const Account = require('../models/Account');
-const Notification = require('../models/Notification');
+const transactionSubject = require('../patterns/observer');
 const generateTransactionReference = require('../utils/generateTransactionReference');
 const mongoose = require('mongoose');
-const { toMinorUnits, formatLKR } = require('../utils/currency');
+const { toMinorUnits } = require('../utils/currency');
 
 // @desc    Transfer funds
 // @route   POST /api/transactions/transfer
@@ -81,22 +81,25 @@ const transferFunds = async (req, res) => {
     transaction[0].status = 'SUCCESSFUL';
     await transaction[0].save({ session });
 
-    await Notification.create([{
-      user: senderAccount.user,
-      title: 'Transfer Successful',
-      message: `You have successfully transferred ${formatLKR(amount)} to account ${receiverAccountNumber}`,
-      type: 'TRANSACTION'
-    }], { session });
-
-    await Notification.create([{
-      user: receiverAccount.user,
-      title: 'Funds Received',
-      message: `You have received ${formatLKR(amount)} from account ${senderAccount.accountNumber}`,
-      type: 'TRANSACTION'
-    }], { session });
-
     await session.commitTransaction();
     session.endSession();
+
+    // Include account details for observers without changing the saved document or API response.
+    const notificationTransaction = {
+      referenceNumber: transaction[0].referenceNumber,
+      status: transaction[0].status,
+      amount: transaction[0].amount,
+      senderAccount: { user: senderAccount.user, accountNumber: senderAccount.accountNumber },
+      receiverAccount: { user: receiverAccount.user, accountNumber: receiverAccount.accountNumber }
+    };
+    for (const userId of [senderAccount.user, receiverAccount.user]) {
+      try {
+        await transactionSubject.notifyObservers(notificationTransaction, userId);
+      } catch (error) {
+        // A notification failure must never roll back a committed transfer.
+        console.error('Transaction notification failed:', error);
+      }
+    }
 
     res.status(200).json({
       success: true,
