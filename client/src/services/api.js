@@ -44,6 +44,7 @@ export const getComplaintAdmins = () => api.get('/complaints/admins');
 export const createComplaint = (data) => api.post('/complaints', data);
 export const getMyComplaints = (params) => api.get('/complaints/my-complaints', { params });
 export const getComplaintById = (id) => api.get(`/complaints/${id}`);
+export const updateComplaint = (id, data) => api.put(`/complaints/${id}`, data);
 export const getAssignedComplaints = (params) => api.get('/complaints/assigned', { params });
 export const updateComplaintStatus = (id, data) => api.put(`/complaints/${id}/status`, data);
 export const escalateComplaint = (id) => api.put(`/complaints/${id}/escalate`);

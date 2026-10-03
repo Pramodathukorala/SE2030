@@ -87,6 +87,36 @@ const getComplaintById = async (req, res) => {
   }
 };
 
+const updateComplaint = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid complaint ID' });
+    }
+
+    const { title, description, category } = req.body;
+    if (typeof title !== 'string' || !title.trim() ||
+        typeof description !== 'string' || !description.trim()) {
+      return res.status(400).json({ success: false, message: 'Title and description are required' });
+    }
+    if (!Complaint.schema.path('category').enumValues.includes(category)) {
+      return res.status(400).json({ success: false, message: 'Please select a valid category' });
+    }
+
+    const complaint = await Complaint.findOneAndUpdate(
+      { _id: id, customer: req.user._id },
+      { $set: { title: title.trim(), description: description.trim(), category } },
+      { new: true, runValidators: true }
+    );
+    if (!complaint) {
+      return res.status(404).json({ success: false, message: 'Complaint not found' });
+    }
+    res.json({ success: true, message: 'Complaint updated', data: complaint });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const getAssignedComplaints = async (req, res) => {
   try {
     const { status } = req.query;
@@ -231,6 +261,7 @@ module.exports = {
   createComplaint,
   getMyComplaints,
   getComplaintById,
+  updateComplaint,
   getAssignedComplaints,
   updateComplaintStatus,
   escalateComplaint,

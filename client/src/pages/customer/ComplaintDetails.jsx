@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Badge, Button, Row, Col } from 'react-bootstrap';
+import { Card, Badge, Button, Row, Col, Form, Alert } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getComplaintById } from '../../services/api';
+import { getComplaintById, updateComplaint } from '../../services/api';
+import { toast } from 'react-toastify';
 import DashboardLayout from '../../components/DashboardLayout';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { FaArrowLeft, FaClock } from 'react-icons/fa';
@@ -24,6 +25,41 @@ const ComplaintDetails = () => {
   const [complaint, setComplaint] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [formData, setFormData] = useState({ title: '', category: 'OTHER', description: '' });
+
+  const startEditing = () => {
+    setFormData({ title: complaint.title, category: complaint.category, description: complaint.description });
+    setSaveError('');
+    setEditing(true);
+  };
+
+  const handleChange = (event) => {
+    setFormData(current => ({ ...current, [event.target.name]: event.target.value }));
+  };
+
+  const handleSave = async (event) => {
+    event.preventDefault();
+    if (saving) return;
+    if (!formData.title.trim() || !formData.description.trim()) {
+      setSaveError('Title and description are required');
+      return;
+    }
+    setSaving(true);
+    setSaveError('');
+    try {
+      const res = await updateComplaint(id, formData);
+      setComplaint(res.data.data);
+      setEditing(false);
+      toast.success('Complaint updated successfully');
+    } catch (err) {
+      setSaveError(err.response?.data?.message || 'Failed to update complaint. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   useEffect(() => {
     const fetchComplaint = async () => {
@@ -45,11 +81,47 @@ const ComplaintDetails = () => {
 
   return (
     <DashboardLayout>
-      <div className="mb-3">
+      <div className="mb-3 d-flex justify-content-between align-items-center">
         <Button variant="link" className="text-decoration-none p-0" onClick={() => navigate(-1)}>
           <FaArrowLeft className="me-2"/> Back
         </Button>
+        {!editing && <Button variant="primary" onClick={startEditing}>Edit Complaint</Button>}
       </div>
+
+      {editing && (
+        <Card className="shadow-sm border-0 mb-4">
+          <Card.Body className="p-4">
+            <h4 className="mb-3">Edit Complaint</h4>
+            {saveError && <Alert variant="danger">{saveError}</Alert>}
+            <Form onSubmit={handleSave}>
+              <fieldset disabled={saving}>
+                <Form.Group className="mb-3" controlId="editComplaintTitle">
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control name="title" value={formData.title} onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="editComplaintCategory">
+                  <Form.Label>Category</Form.Label>
+                  <Form.Select name="category" value={formData.category} onChange={handleChange} required>
+                    <option value="TRANSACTION_ISSUE">Transaction Issue</option>
+                    <option value="ACCOUNT_ISSUE">Account Issue</option>
+                    <option value="SERVICE_REQUEST">Service Request</option>
+                    <option value="TECHNICAL_ISSUE">Technical Issue</option>
+                    <option value="OTHER">Other</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-4" controlId="editComplaintDescription">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={5} name="description" value={formData.description} onChange={handleChange} required />
+                </Form.Group>
+                <Button type="submit" variant="primary" className="me-2">
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </Button>
+                <Button type="button" variant="outline-secondary" onClick={() => setEditing(false)}>Cancel</Button>
+              </fieldset>
+            </Form>
+          </Card.Body>
+        </Card>
+      )}
       
       <Card className="shadow-sm border-0 mb-4" style={{ borderTop: '5px solid #0B3D60' }}>
         <Card.Body className="p-4">

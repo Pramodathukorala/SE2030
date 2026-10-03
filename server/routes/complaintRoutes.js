@@ -1,7 +1,7 @@
 const express = require('express');
 const { 
   getComplaintAdmins, createComplaint, getMyComplaints, getAssignedComplaints, getEscalatedComplaints,
-  getComplaintById, updateComplaintStatus, escalateComplaint, resolveComplaint, 
+  getComplaintById, updateComplaint, updateComplaintStatus, escalateComplaint, resolveComplaint,
   closeComplaint, addManagerNotes, deleteComplaint
 } = require('../controllers/complaintController');
 const { protect } = require('../middleware/authMiddleware');
@@ -10,6 +10,7 @@ const { authorize } = require('../middleware/roleMiddleware');
 const router = express.Router();
 
 router.post('/', protect, authorize('CUSTOMER'), createComplaint);
+router.put('/:id', protect, authorize('CUSTOMER'), updateComplaint);
 router.delete('/:id', protect, authorize('SYSTEM_ADMIN'), deleteComplaint);
 router.get('/admins', protect, authorize('CUSTOMER'), getComplaintAdmins);
 router.get('/my-complaints', protect, authorize('CUSTOMER'), getMyComplaints);
